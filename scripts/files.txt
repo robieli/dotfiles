@@ -1,0 +1,7 @@
+~/.config/waybar/
+~/.config/hypr/
+~/.config/tofi/
+~/scripts/
+~/.config/wal/
+~/.config/wallpapers/
+

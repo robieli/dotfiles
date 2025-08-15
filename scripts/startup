@@ -1,0 +1,24 @@
+#!/bin/bash
+
+~/scripts/start-hyprpaper
+process_id=$!
+wait $process_id
+hypridle
+process_id=$!
+wait $process_id
+xrdb ~/.Xresources
+process_id=$!
+wait $process_id
+albert
+process_id=$!
+wait $process_id
+wal -R
+process_id=$!
+wait $process_id
+~/scripts/change-theme
+process_id=$!
+wait $process_id
+~/.config/hypr/reload-hyprpaper.sh
+process_id=$!
+wait $process_id
+~/scripts/start-waybar

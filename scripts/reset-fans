@@ -1,0 +1,2 @@
+asusctl profile -P Quiet
+asusctl profile -P Balanced

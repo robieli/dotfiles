@@ -1,0 +1,30 @@
+#!/bin/bash
+
+WALLPAPER_DIR="$HOME/.config/wallpapers"
+WALLPAPER="$1"
+MONITOR="eDP-2"
+
+if [ ! -f "$WALLPAPER_DIR/$WALLPAPER" ]; then
+	WALLPAPER="$(sed -n 's|^preload = ~/.config/wallpapers/||p' ~/.config/hypr/hyprpaper.conf)"
+fi
+
+sed -i -r "s/(preload = ~\/.config\/wallpapers\/).*\.(jpg|png)/\1${WALLPAPER}/g" ~/.config/hypr/hyprpaper.conf
+sed -i -r "s/(wallpaper = ,~\/.config\/wallpapers\/).*\.(jpg|png)/\1${WALLPAPER}/g" ~/.config/hypr/hyprpaper.conf
+
+~/.config/hypr/reload-hyprpaper.sh
+process_id=$!
+wait $process_id
+
+wal -i "$WALLPAPER_DIR/$WALLPAPER"
+
+WAL_JSON="$HOME/.cache/wal/colors.json"
+ACTIVE=$(cat $WAL_JSON | jq -r '.colors.color4')
+INACTIVE=$(cat $WAL_JSON | jq -r '.colors.color0')
+
+ACTIVE="rgb(${ACTIVE:1:6})"
+INACTIVE="rgb(${INACTIVE:1:6})"
+
+hyprctl keyword general:col.active_border "$ACTIVE"
+hyprctl keyword general:col.inactive_border "$INACTIVE"
+
+~/scripts/start-hyprpaper

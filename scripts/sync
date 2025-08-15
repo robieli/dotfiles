@@ -1,0 +1,14 @@
+#!/bin/bash
+
+while read p; do
+  eval cp -R $p ~/dotfiles/
+done <~/scripts/files.txt
+
+cd $HOME/dotfiles/
+git add .
+process_id=$!
+wait $process_id
+git commit -m "File synchronization"
+process_id=$!
+wait $process_id
+git push
