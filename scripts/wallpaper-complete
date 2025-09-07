@@ -1,0 +1,5 @@
+#!/bin/bash
+
+wallpapers=$(ls $HOME/.config/wallpapers/ | sed -z 's/\n/ /g')
+echo $wallpapers
+complete -W "$wallpapers" change-theme

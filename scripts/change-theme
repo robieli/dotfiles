@@ -5,11 +5,11 @@ WALLPAPER="$1"
 MONITOR="eDP-2"
 
 if [ ! -f "$WALLPAPER_DIR/$WALLPAPER" ]; then
-	WALLPAPER="$(sed -n 's|^preload = ~/.config/wallpapers/||p' ~/.config/hypr/hyprpaper.conf)"
+  WALLPAPER="$(sed -n 's|^preload = ~/.config/wallpapers/||p' ~/.config/hypr/hyprpaper.conf)"
 fi
 
-sed -i -r "s/(preload = ~\/.config\/wallpapers\/).*\.(jpg|png)/\1${WALLPAPER}/g" ~/.config/hypr/hyprpaper.conf
-sed -i -r "s/(wallpaper = ,~\/.config\/wallpapers\/).*\.(jpg|png)/\1${WALLPAPER}/g" ~/.config/hypr/hyprpaper.conf
+sed -i -E "s/(preload = ~\/.config\/wallpapers\/).*\.(jpg|png)/\1${WALLPAPER}/g" ~/.config/hypr/hyprpaper.conf
+sed -i -E "s/(wallpaper = ,~\/.config\/wallpapers\/).*\.(jpg|png)/\1${WALLPAPER}/g" ~/.config/hypr/hyprpaper.conf
 
 ~/.config/hypr/reload-hyprpaper.sh
 process_id=$!
@@ -23,6 +23,9 @@ INACTIVE=$(cat $WAL_JSON | jq -r '.colors.color0')
 
 ACTIVE="rgb(${ACTIVE:1:6})"
 INACTIVE="rgb(${INACTIVE:1:6})"
+LOCK_ACTIVE="rgba(${ACTIVE:4:6}ee)"
+
+# sed -i -E "s/(outer_color = )rgba\([0-9A-Za-z]{8}\)/\1${LOCK_ACTIVE}/" ~/.config/hypr/hyprlock.conf
 
 hyprctl keyword general:col.active_border "$ACTIVE"
 hyprctl keyword general:col.inactive_border "$INACTIVE"

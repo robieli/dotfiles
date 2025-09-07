@@ -1,0 +1,7 @@
+NETWORK=$1
+
+iwctl station wlan0 connect "$NETWORK"
+process_id=$!
+wait $process_id
+
+nmcli device wifi connect "$NETWORK"

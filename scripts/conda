@@ -1,0 +1,3 @@
+#!/bin/bash
+
+eval "$(/home/robineli/anaconda3/bin/conda shell.bash hook)"
